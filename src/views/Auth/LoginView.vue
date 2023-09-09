@@ -83,7 +83,7 @@ const login = async () => {
 
     if (result) {
       SwalClose();
-      router.push("/dashboard/home");
+      router.push("/dashboard/usuarios");
     }
   } catch (error) {}
 };
