@@ -69,11 +69,21 @@
 
     <div>
       <button
+        v-if="!props.isEditing"
         type="submit"
         class="block w-full rounded-lg border border-black bg-black text-white p-2 text-sm font-bold hover:bg-black/50 hover:text-white transition-all duration-300 ease-in-out"
         @click.prevent="saveUser"
       >
         Registrar
+      </button>
+
+      <button
+        v-if="props.isEditing"
+        type="submit"
+        class="block w-full rounded-lg border border-black bg-black text-white p-2 text-sm font-bold hover:bg-black/50 hover:text-white transition-all duration-300 ease-in-out"
+        @click.prevent="updateUser"
+      >
+        Actualizar
       </button>
     </div>
   </div>
@@ -85,7 +95,11 @@ const props = defineProps({
   form: {
     type: Object,
     required: true,
-  }
+  },
+  isEditing: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const saveUser = () => {

@@ -15,7 +15,7 @@
             type="email"
             id="email"
             class="block w-full rounded-lg border border-white bg-transparent p-2 text-sm text-white placeholder:text-white/90 focus:border-white focus:ring-white"
-            placeholder="correo@gmail.com"
+            placeholder="Correo electrónico"
             required
           />
         </div>

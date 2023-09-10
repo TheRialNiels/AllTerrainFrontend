@@ -2,7 +2,7 @@ import Swal from "sweetalert2/dist/sweetalert2.all.js";
 
 export const SwalLoading = () => {
   Swal.fire({
-    title: "Loading...",
+    title: "Cargando...",
     allowOutsideClick: false,
     didOpen: () => {
       Swal.showLoading();
@@ -44,7 +44,7 @@ export const SwalCustomConfirm = async (title, text, icon, confirmBtn) => {
     confirmButtonColor: "#004438",
     confirmButtonText: confirmBtn,
     cancelButtonColor: "#d33",
-    cancelButtonText: "Cancel",
+    cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
       return true;
@@ -112,14 +112,14 @@ export const SwalInfo = (text) => {
 
 export const SwalDelete = async (text) => {
   return Swal.fire({
-    title: "Are you sure?",
+    title: "¿Estás seguro?",
     text: text,
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#004438",
-    confirmButtonText: "Yes, delete it!",
+    confirmButtonText: "Sí!",
     cancelButtonColor: "#d33",
-    cancelButtonText: "Cancel",
+    cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
       return true;

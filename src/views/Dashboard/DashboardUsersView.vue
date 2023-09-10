@@ -2,7 +2,9 @@
   <div>
     <h1 class="text-xl font-bold">Formulario para registro de usuarios</h1>
 
-    <AddUserForm :form="form" @save-user="saveUser" />
+    <AddUserForm :form="form" :isEditing="isEditing" @save-user="saveUser" @update-user="updateUser" />
+
+    <UserTable :form="form" :isEditing="isEditing" @change-is-editing="changeIsEditing" />
   </div>
 </template>
 
@@ -19,8 +21,10 @@ import {
 } from "@/components/SwalAlerts/index";
 import toDoRequest from "@/api/toDoRequests";
 import AddUserForm from "@/components/Forms/AddUserForm.vue";
+import UserTable from "@/components/Tables/UserTable.vue";
 
 const form = reactive({
+  id: "",
   email: "",
   username: "",
   first_name: "",
@@ -28,7 +32,10 @@ const form = reactive({
   role: "",
 });
 
+const isEditing = ref(false);
+
 const emptyForm = () => {
+  form.id = "";
   form.email = "";
   form.username = "";
   form.first_name = "";
@@ -64,5 +71,39 @@ const saveUser = async () => {
   } catch (error) {
     SwalError(error.response.data.error || "¡Algo salió mal!");
   }
+};
+
+const updateUser = async () => {
+  if (
+    !form.email ||
+    !form.username ||
+    !form.first_name ||
+    !form.last_name ||
+    !form.role
+  ) {
+    SwalWarning("Todos los campos son obligatorios");
+    return;
+  }
+
+  SwalCustomLoading("Actualizando...");
+
+  try {
+    const response = await toDoRequest.patch(
+      "api/auth/update-user/",
+      form
+    );
+
+    if (response.status === 200) {
+      SwalSuccess("Usuario actualizado exitosamente");
+
+      emptyForm();
+    }
+  } catch (error) {
+    SwalError(error.response.data.error || "¡Algo salió mal!");
+  }
+}
+
+const changeIsEditing = () => {
+  isEditing.value = true;
 };
 </script>
