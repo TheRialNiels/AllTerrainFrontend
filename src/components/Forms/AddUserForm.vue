@@ -90,7 +90,7 @@
 </template>
 
 <script setup lang="ts">
-const emit = defineEmits(["save-user"]);
+const emit = defineEmits(["save-user", "update-user"]);
 const props = defineProps({
   form: {
     type: Object,

@@ -130,7 +130,6 @@ const deleteUser = async (cell) => {
         SwalSuccess('Usuario Eliminado')
       }
     } catch (error) {
-      console.log(error)
       SwalError(error.response.data.error || 'Error al eliminar el usuario')
     }
   }
