@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { TabulatorFull as Tabulator } from "tabulator-tables";
 import toDoRequest from '@/api/toDoRequests.js'
 import {
@@ -19,8 +19,16 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  userData: {
+    type: Array,
+    required: true,
+  },
   isEditing: {
     type: Boolean,
+    required: true,
+  },
+  getUserData: {
+    type: Function,
     required: true,
   },
 });
@@ -30,14 +38,8 @@ const table = ref(null);
 
 const initTable = () => {
   tabulator.value = new Tabulator(table.value, {
-    ajaxURL: 'http://localhost:8000/api/auth/get-users/',
-    ajaxConfig: {
-      headers: {
-        Authorization: `Token ${localStorage.getItem('token')}`,
-      },
-    },
+    data: props.userData,
     layout: 'fitColumns',
-    ajaxContentType: 'json',
     printAsHtml: true,
     printStyled: true,
     pagination: 'remote',
@@ -58,9 +60,13 @@ const initTable = () => {
       },
       {
         title: 'Nombre Completo',
-        field: 'get_full_name',
         headerFilter: 'input',
         headerHozAlign: 'center',
+        formatter: (cell) => {
+          let data = cell.getRow().getData()
+
+          return `${data.first_name} ${data.last_name}`
+        },
       },
       {
         title: 'Correo',
@@ -135,7 +141,14 @@ const deleteUser = async (cell) => {
   }
 }
 
-onMounted(() => {
-  initTable()
+watch(() => props.userData, (newUserData) => {
+  if (tabulator.value) {
+    tabulator.value.setData(newUserData);
+  }
+});
+
+onMounted(async () => {
+  await props.getUserData();
+  initTable();
 })
 </script>

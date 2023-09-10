@@ -2,14 +2,25 @@
   <div>
     <h1 class="text-xl font-bold">Formulario para registro de usuarios</h1>
 
-    <AddUserForm :form="form" :isEditing="isEditing" @save-user="saveUser" @update-user="updateUser" />
+    <AddUserForm
+      :form="form"
+      :isEditing="isEditing"
+      @save-user="saveUser"
+      @update-user="updateUser"
+    />
 
-    <UserTable :form="form" :isEditing="isEditing" @change-is-editing="changeIsEditing" />
+    <UserTable
+      :form="form"
+      :userData="userData"
+      :isEditing="isEditing"
+      :getUserData="getUserData"
+      @change-is-editing="changeIsEditing"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import {
   SwalError,
   SwalLoading,
@@ -23,6 +34,8 @@ import toDoRequest from "@/api/toDoRequests";
 import AddUserForm from "@/components/Forms/AddUserForm.vue";
 import UserTable from "@/components/Tables/UserTable.vue";
 
+const userData = ref([]);
+
 const form = reactive({
   id: "",
   email: "",
@@ -33,6 +46,21 @@ const form = reactive({
 });
 
 const isEditing = ref(false);
+
+const getUserData = async () => {
+  SwalLoading();
+
+  try {
+    const response = await toDoRequest.get("api/auth/get-users/");
+
+    if (response.status === 200) {
+      SwalClose();
+      userData.value = response.data;
+    }
+  } catch (error) {
+    SwalError(error.response.data.error || "¡Algo salió mal!");
+  }
+};
 
 const emptyForm = () => {
   form.id = "";
@@ -58,10 +86,7 @@ const saveUser = async () => {
   SwalCustomLoading("Guardando...");
 
   try {
-    const response = await toDoRequest.post(
-      "api/auth/create-user/",
-      form
-    );
+    const response = await toDoRequest.post("api/auth/create-user/", form);
 
     if (response.status === 201) {
       SwalSuccess("Usuario registrado exitosamente");
@@ -88,20 +113,30 @@ const updateUser = async () => {
   SwalCustomLoading("Actualizando...");
 
   try {
-    const response = await toDoRequest.patch(
-      "api/auth/update-user/",
-      form
-    );
+    const response = await toDoRequest.patch("api/auth/update-user/", form);
 
     if (response.status === 200) {
       SwalSuccess("Usuario actualizado exitosamente");
 
+      const userDataArray = userData.value;
+
+      // Actualiza la información del usuario en la lista userData
+      const updatedUserIndex = userDataArray.findIndex((user) => user.id === form.id);
+      if (updatedUserIndex !== -1) {
+        userDataArray[updatedUserIndex] = { ...userDataArray[updatedUserIndex], ...form };
+      }
+
+      // Actualiza userData con la nueva lista modificada
+      userData.value = [...userDataArray];
+
       emptyForm();
+
+      isEditing.value = false;
     }
   } catch (error) {
     SwalError(error.response.data.error || "¡Algo salió mal!");
   }
-}
+};
 
 const changeIsEditing = () => {
   isEditing.value = true;
