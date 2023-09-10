@@ -19,6 +19,16 @@ const router = createRouter({
           name: 'DashboardUsers',
           component: () => import('@/views/Dashboard/DashboardUsersView.vue')
         },
+        {
+          path: '/dashboard/puntuaciones',
+          name: 'DashboardPuntuaciones',
+          component: () => import('@/views/Dashboard/DashboardPuntuacionesView.vue')
+        },
+        {
+          path: '/dashboard/equipos',
+          name: 'DashboardEquipos',
+          component: () => import('@/views/Dashboard/DashboardEquiposView.vue')
+        },
       ]
     }
   ]

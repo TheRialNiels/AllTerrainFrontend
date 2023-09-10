@@ -91,6 +91,8 @@ const saveUser = async () => {
     if (response.status === 201) {
       SwalSuccess("Usuario registrado exitosamente");
 
+      userData.value.push(form);
+
       emptyForm();
     }
   } catch (error) {

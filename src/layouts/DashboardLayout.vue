@@ -46,6 +46,15 @@
             <span class="ml-3 flex-1 whitespace-nowrap">Puntuaciones</span>
           </a>
         </li>
+        <li>
+          <a
+            href="/dashboard/equipos"
+            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+          >
+            <font-awesome-icon :icon="['fas', 'people-group']" />
+            <span class="ml-3 flex-1 whitespace-nowrap">Equipos</span>
+          </a>
+        </li>
       </ul>
       <button
         class="group flex items-center text-start rounded-lg p-2 text-gray-900 hover:bg-gray-100"
