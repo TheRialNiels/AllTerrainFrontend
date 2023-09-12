@@ -39,7 +39,7 @@ const teamData = ref([]);
 const form = reactive({
   id: "",
   nombreEquipo: "",
-  puntaje: "",
+  puntaje: 0,
   status: "",
 });
 
@@ -63,7 +63,7 @@ const getTeamData = async () => {
 const emptyForm = () => {
   form.id = "";
   form.nombreEquipo = "";
-  form.puntaje = "";
+  form.puntaje = 0;
   form.status = "";
 };
 

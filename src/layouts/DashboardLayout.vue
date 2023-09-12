@@ -55,9 +55,31 @@
             <span class="ml-3 flex-1 whitespace-nowrap">Equipos</span>
           </a>
         </li>
+        <li>
+
+          <a
+            href="/dashboard/universidades"
+            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+          >
+            <font-awesome-icon :icon="['fas', 'building-columns']" />
+            <span class="ml-3 flex-1 whitespace-nowrap">Universidades</span>
+          </a>
+        </li>
+
+        <li>
+
+          <a
+            href="/dashboard/asesores"
+            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+          >
+            <font-awesome-icon :icon="['fas', 'person-harassing']" />
+            <span class="ml-3 flex-1 whitespace-nowrap">Asesores</span>
+          </a>
+        </li> 
       </ul>
+
       <button
-        class="group flex items-center text-start rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+        class="group flex items-center rounded-lg p-2 text-start text-gray-900 hover:bg-gray-100"
       >
         <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
         <span class="ml-3 flex-1 whitespace-nowrap">Sign Out</span>
@@ -66,9 +88,7 @@
   </aside>
 
   <div class="p-4 sm:ml-64">
-    <div
-      class="rounded-lg border-2 border-dashed border-gray-200 p-4"
-    >
+    <div class="rounded-lg border-2 border-dashed border-gray-200 p-4">
       <RouterView />
       <!-- <div class="mb-4 grid grid-cols-3 gap-4">
         <div

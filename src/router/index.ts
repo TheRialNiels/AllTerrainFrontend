@@ -29,6 +29,16 @@ const router = createRouter({
           name: 'DashboardEquipos',
           component: () => import('@/views/Dashboard/DashboardEquiposView.vue')
         },
+        {
+          path: '/dashboard/universidades',
+          name: 'DashboardUniversidades',
+          component: () => import('@/views/Dashboard/DashboardUniversidadesView.vue')
+        },
+        {
+          path: '/dashboard/asesores',
+          name: 'DashboardAsesores',
+          component: () => import('@/views/Dashboard/DashboardAsesorView.vue')
+        },
       ]
     }
   ]

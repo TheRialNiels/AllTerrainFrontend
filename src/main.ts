@@ -10,9 +10,9 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
 // Icons to be imported
-import { faPeopleGroup, faRightFromBracket, faTrophy, faUsers } from '@fortawesome/free-solid-svg-icons'
+import { faBuildingColumns, faPeopleGroup, faPersonHarassing, faRightFromBracket, faTrophy, faUsers } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faUsers, faTrophy, faRightFromBracket, faPeopleGroup);
+library.add(faUsers, faTrophy, faRightFromBracket, faPeopleGroup ,faBuildingColumns,faPersonHarassing);
 
 const app = createApp(App)
 
