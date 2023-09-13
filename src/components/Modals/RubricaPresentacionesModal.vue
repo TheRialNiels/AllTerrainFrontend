@@ -3,6 +3,10 @@
     <template #body>
       <div class="h-screen overflow-y-auto">
         <div class="my-10 flex flex-col items-center justify-center">
+          <h1 class="mb-5 text-2xl font-bold">
+            Rubrica de presentaciones
+          </h1>
+
           <table class="table-auto border-collapse border border-black">
             <thead>
               <tr>
@@ -35,9 +39,12 @@
           </table>
 
           <div class="my-5 flex items-center justify-between gap-5">
-            <p class="text-lg">Espacio para preguntas (15 puntos máximo de acuerdo al nivel de satisfacción en la respuesta):</p>
+            <p class="text-lg">
+              Espacio para preguntas (15 puntos máximo de acuerdo al nivel de
+              satisfacción en la respuesta):
+            </p>
             <input
-              class="border border-black px-4 py-2 w-20"
+              class="w-20 border border-black px-4 py-2"
               type="number"
               name="preguntas"
               id="preguntas"
@@ -56,14 +63,14 @@
           <button
             @click="props.closeModal"
             type="button"
-            class="rounded-full border border-black bg-transparent px-10 py-2.5 text-sm font-bold transition-all duration-300 ease-in-out hover:bg-black/50 hover:text-white focus:z-10 focus:outline-none focus:ring-4 focus:ring-tertiary/50"
+            class="focus:ring-tertiary/50 rounded-full border border-black bg-transparent px-10 py-2.5 text-sm font-bold transition-all duration-300 ease-in-out hover:bg-black/50 hover:text-white focus:z-10 focus:outline-none focus:ring-4"
           >
             Cancelar
           </button>
           <button
             @click="returnSubtotal"
             type="button"
-            class="rounded-full bg-black px-10 py-2.5 text-center text-sm font-bold text-white transition-all duration-300 ease-in-out hover:bg-black/80 focus:outline-none focus:ring-4 focus:ring-secondary"
+            class="focus:ring-secondary rounded-full bg-black px-10 py-2.5 text-center text-sm font-bold text-white transition-all duration-300 ease-in-out hover:bg-black/80 focus:outline-none focus:ring-4"
           >
             Calificar
           </button>
@@ -74,8 +81,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue';
-import { Modal } from 'flowbite-vue';
+import { ref, reactive, computed } from "vue";
+import { Modal } from "flowbite-vue";
 
 const emit = defineEmits(["get-subtotal"]);
 
@@ -88,7 +95,7 @@ const extraQuestion = ref(0);
 let subtotal = computed(() => {
   let subtotal = 0;
   content.rubrica.forEach((rubro) => {
-    if (typeof rubro.puntaje === 'number') {
+    if (typeof rubro.puntaje === "number") {
       subtotal += rubro.puntaje;
     } else {
       subtotal += parseInt(rubro.puntaje);
@@ -104,83 +111,86 @@ const content = reactive({
   rubrica: [
     {
       id: 1,
-      nombre: 'El equipo usa vestimenta acorde al evento',
+      nombre: "El equipo usa vestimenta acorde al evento",
       puntaje: 0,
     },
     {
       id: 2,
-      nombre: 'La presentación comenzó a tiempo',
+      nombre: "La presentación comenzó a tiempo",
       puntaje: 0,
     },
     {
       id: 3,
-      nombre: 'La presentación concluyó en el tiempo acordado (5 - 7 minutos)',
+      nombre: "La presentación concluyó en el tiempo acordado (5 - 7 minutos)",
       puntaje: 0,
     },
     {
       id: 4,
-      nombre: 'El equipo muestra dominio del tema durante la presentación',
+      nombre: "El equipo muestra dominio del tema durante la presentación",
       puntaje: 0,
     },
     {
       id: 5,
-      nombre: 'La presentación refleja secuencia lógica en el desarrollo de las ideas',
+      nombre:
+        "La presentación refleja secuencia lógica en el desarrollo de las ideas",
       puntaje: 0,
     },
     {
       id: 6,
-      nombre: 'La presentación muestra claramente el proceso de diseño',
+      nombre: "La presentación muestra claramente el proceso de diseño",
       puntaje: 0,
     },
     {
       id: 7,
-      nombre: 'La presentación muestra el proceso de manuractura',
+      nombre: "La presentación muestra el proceso de manuractura",
       puntaje: 0,
     },
     {
       id: 8,
-      nombre: 'La presentación muestra el proceso de pruebas al vehículo',
+      nombre: "La presentación muestra el proceso de pruebas al vehículo",
       puntaje: 0,
     },
     {
       id: 9,
-      nombre: 'Describen claramente la metodología de trabajo',
+      nombre: "Describen claramente la metodología de trabajo",
       puntaje: 0,
     },
     {
       id: 10,
-      nombre: 'Se muestra un análisis crítico de los resultados obtenidos',
+      nombre: "Se muestra un análisis crítico de los resultados obtenidos",
       puntaje: 0,
     },
     {
       id: 11,
-      nombre: 'El proyecto muestra ideas innovadoras',
+      nombre: "El proyecto muestra ideas innovadoras",
       puntaje: 0,
     },
     {
       id: 12,
-      nombre: 'La presentación del poster es atractiva y sirve de apoyo',
+      nombre: "La presentación del poster es atractiva y sirve de apoyo",
       puntaje: 0,
     },
     {
       id: 13,
-      nombre: 'El equipo mantiene un correcto lenguaje corporal, vocal y visual',
+      nombre:
+        "El equipo mantiene un correcto lenguaje corporal, vocal y visual",
       puntaje: 0,
     },
     {
       id: 14,
-      nombre: 'Las evidencias de la presentación demuestran un trabajo colaborativo',
+      nombre:
+        "Las evidencias de la presentación demuestran un trabajo colaborativo",
       puntaje: 0,
     },
     {
       id: 15,
-      nombre: 'La presentación se realizó en idioma inglés',
+      nombre: "La presentación se realizó en idioma inglés",
       puntaje: 0,
     },
   ],
 });
 
 const returnSubtotal = () => {
-  emit('get-subtotal', 1, subtotal.value);
+  emit("get-subtotal", 1, subtotal.value);
 };
 </script>
