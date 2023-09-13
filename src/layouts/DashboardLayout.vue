@@ -39,15 +39,6 @@
         </li>
         <li>
           <a
-            href="/dashboard/puntuaciones"
-            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
-          >
-            <font-awesome-icon :icon="['fas', 'trophy']" />
-            <span class="ml-3 flex-1 whitespace-nowrap">Puntuaciones</span>
-          </a>
-        </li>
-        <li>
-          <a
             href="/dashboard/equipos"
             class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
           >
@@ -74,6 +65,17 @@
           >
             <font-awesome-icon :icon="['fas', 'person-harassing']" />
             <span class="ml-3 flex-1 whitespace-nowrap">Asesores</span>
+          </a>
+        </li> 
+
+        <li>
+
+          <a
+            href="/dashboard/pruebas"
+            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+          >
+            <font-awesome-icon :icon="['fas', 'list-check']" />
+            <span class="ml-3 flex-1 whitespace-nowrap">Pruebas</span>
           </a>
         </li> 
       </ul>
