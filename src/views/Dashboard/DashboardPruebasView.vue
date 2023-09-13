@@ -38,7 +38,7 @@
                 </h3>
 
                 <button
-                  v-if="prueba.puntaje <= 0"
+                  v-if="!prueba.calificado"
                   class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
                   @click="modalSelected = prueba.id"
                 >
@@ -60,6 +60,7 @@
   </div>
 
   <RubricaPresentacionesModal v-if="modalSelected === 1" @get-subtotal="getSubtotal" :closeModal="closeModal" />
+  <RubricaSeguridadModal v-if="modalSelected === 2" @get-subtotal="getSubtotal" :closeModal="closeModal" />
 </template>
 
 <script setup lang="ts">
@@ -75,6 +76,7 @@ import {
 } from "@/components/SwalAlerts/index";
 import toDoRequest from "@/api/toDoRequests";
 import RubricaPresentacionesModal from "@/components/Modals/RubricaPresentacionesModal.vue";
+import RubricaSeguridadModal from "@/components/Modals/RubricaSeguridadModal.vue";
 
 const form = reactive({
   idEquipo: 0,
@@ -88,26 +90,31 @@ const pruebaData = ref([
     id: 1,
     nombrePrueba: "Rubrica de presentaciones",
     puntaje: 0,
+    calificado: false,
   },
   {
     id: 2,
     nombrePrueba: "Escrutinio de seguridad",
     puntaje: 0,
+    calificado: false,
   },
   {
     id: 3,
     nombrePrueba: "Tiempo de vuelta",
     puntaje: 0,
+    calificado: false,
   },
   {
     id: 4,
     nombrePrueba: "Prueba de aceleración y frenado",
     puntaje: 0,
+    calificado: false,
   },
   {
     id: 5,
     nombrePrueba: "Prueba de aceleración y frenado",
     puntaje: 0,
+    calificado: false,
   },
 ]);
 
@@ -129,10 +136,12 @@ const closeModal = () => {
 };
 
 const getSubtotal = (modal: number, subtotal: number) => {
-  console.log(modal);
-  console.log(subtotal);
-  pruebaData.value[modal - 1].puntaje = subtotal;
-  console.log(pruebaData.value);
+  pruebaData.value.forEach((prueba) => {
+    if (prueba.id === modal) {
+      prueba.puntaje = subtotal;
+      prueba.calificado = true;
+    }
+  });
   closeModal();
 };
 
