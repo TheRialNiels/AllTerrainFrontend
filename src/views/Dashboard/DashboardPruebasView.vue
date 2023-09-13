@@ -46,10 +46,17 @@
                 </button>
 
                 <p
-                  v-else
+                  v-else-if="prueba.calificado && !prueba.tiempos"
                   class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
                 >
                   Calificado ({{ prueba.puntaje }} pts)
+                </p>
+
+                <p
+                  v-else-if="prueba.calificado && prueba.tiempos"
+                  class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
+                >
+                  Calificado
                 </p>
               </div>
             </div>
@@ -61,6 +68,7 @@
 
   <RubricaPresentacionesModal v-if="modalSelected === 1" @get-subtotal="getSubtotal" :closeModal="closeModal" />
   <RubricaSeguridadModal v-if="modalSelected === 2" @get-subtotal="getSubtotal" :closeModal="closeModal" />
+  <RubricaTiempoVueltaModal v-if="modalSelected === 3" @get-time="getTime" :closeModal="closeModal" />
 </template>
 
 <script setup lang="ts">
@@ -77,6 +85,19 @@ import {
 import toDoRequest from "@/api/toDoRequests";
 import RubricaPresentacionesModal from "@/components/Modals/RubricaPresentacionesModal.vue";
 import RubricaSeguridadModal from "@/components/Modals/RubricaSeguridadModal.vue";
+import RubricaTiempoVueltaModal from "@/components/Modals/RubricaTiempoVueltaModal.vue";
+
+interface RubricaTiempo {
+  id: number;
+  nombrePrueba: string;
+  tiempos: any;
+}
+
+interface RubricaTiempoVuelta {
+  id: number;
+  nombre: string;
+  tiempo: number;
+}
 
 const form = reactive({
   idEquipo: 0,
@@ -101,13 +122,31 @@ const pruebaData = ref([
   {
     id: 3,
     nombrePrueba: "Tiempo de vuelta",
-    puntaje: 0,
+    tiempos: [
+      {
+        nombre: "circuitoPrimeraVez",
+        tiempo: 0,
+      },
+      {
+        nombre: "circuitoSegundaVez",
+        tiempo: 0,
+      },
+    ],
     calificado: false,
   },
   {
     id: 4,
     nombrePrueba: "Prueba de aceleración y frenado",
-    puntaje: 0,
+    tiempos: [
+      {
+        nombre: "aceleracionPrimeraVez",
+        tiempo: 0,
+      },
+      {
+        nombre: "aceleracionSegundaVez",
+        tiempo: 0,
+      },
+    ],
     calificado: false,
   },
   {
@@ -139,6 +178,17 @@ const getSubtotal = (modal: number, subtotal: number) => {
   pruebaData.value.forEach((prueba) => {
     if (prueba.id === modal) {
       prueba.puntaje = subtotal;
+      prueba.calificado = true;
+    }
+  });
+  closeModal();
+};
+
+const getTime = (modal: number, content: Array<RubricaTiempoVuelta>) => {
+  pruebaData.value.forEach((prueba) => {
+    if (prueba.id === modal) {
+      prueba.tiempos[0] = content[0].tiempo;
+      prueba.tiempos[1] = content[1].tiempo;
       prueba.calificado = true;
     }
   });
