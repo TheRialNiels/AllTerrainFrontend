@@ -35,7 +35,7 @@
       >
         <option value="0" disabled selected>Seleccione un Equipo</option>
         <option
-          v-for="equipo in equipoData "
+          v-for="equipo in equipoData"
           :key="equipo.id"
           :value="equipo.id"
         >
@@ -65,11 +65,11 @@
     </div>
   </div>
 </template>
- 
+
 <script setup lang="ts">
 import { SwalError } from "@/components/SwalAlerts/index";
 import toDoRequest from "@/api/toDoRequests";
-import { onMounted ,ref } from "vue";
+import { onMounted, ref } from "vue";
 
 const emit = defineEmits(["save-uni", "update-uni"]);
 const props = defineProps({
@@ -107,6 +107,6 @@ const getEquipoData = async () => {
 };
 
 onMounted(() => {
-    getEquipoData();
-})
+  getEquipoData();
+});
 </script>
