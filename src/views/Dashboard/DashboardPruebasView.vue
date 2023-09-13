@@ -46,6 +46,13 @@
                 </button>
 
                 <p
+                  v-else-if="prueba.calificado && prueba.tiempos && prueba.puntaje"
+                  class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
+                >
+                  Calificado ({{ prueba.puntaje }} pts)
+                </p>
+
+                <p
                   v-else-if="prueba.calificado && !prueba.tiempos"
                   class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
                 >
@@ -69,6 +76,7 @@
   <RubricaPresentacionesModal v-if="modalSelected === 1" @get-subtotal="getSubtotal" :closeModal="closeModal" />
   <RubricaSeguridadModal v-if="modalSelected === 2" @get-subtotal="getSubtotal" :closeModal="closeModal" />
   <RubricaTiempoVueltaModal v-if="modalSelected === 3" @get-time="getTime" :closeModal="closeModal" />
+  <RubricaAceleracionFrenadoModal v-if="modalSelected === 4" @get-subtotal="getSubtotal" @get-time="getTime" :closeModal="closeModal" />
 </template>
 
 <script setup lang="ts">
@@ -86,6 +94,7 @@ import toDoRequest from "@/api/toDoRequests";
 import RubricaPresentacionesModal from "@/components/Modals/RubricaPresentacionesModal.vue";
 import RubricaSeguridadModal from "@/components/Modals/RubricaSeguridadModal.vue";
 import RubricaTiempoVueltaModal from "@/components/Modals/RubricaTiempoVueltaModal.vue";
+import RubricaAceleracionFrenadoModal from "@/components/Modals/RubricaAceleracionFrenadoModal.vue";
 
 interface RubricaTiempo {
   id: number;
@@ -137,6 +146,7 @@ const pruebaData = ref([
   {
     id: 4,
     nombrePrueba: "Prueba de aceleración y frenado",
+    puntaje: 0,
     tiempos: [
       {
         nombre: "aceleracionPrimeraVez",
