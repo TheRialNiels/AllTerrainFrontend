@@ -20,11 +20,6 @@ const router = createRouter({
           component: () => import('@/views/Dashboard/DashboardUsersView.vue')
         },
         {
-          path: '/dashboard/puntuaciones',
-          name: 'DashboardPuntuaciones',
-          component: () => import('@/views/Dashboard/DashboardPuntuacionesView.vue')
-        },
-        {
           path: '/dashboard/equipos',
           name: 'DashboardEquipos',
           component: () => import('@/views/Dashboard/DashboardEquiposView.vue')
@@ -43,6 +38,11 @@ const router = createRouter({
           path: '/dashboard/pruebas',
           name: 'DashboardPruebas',
           component: () => import('@/views/Dashboard/DashboardPruebasView.vue')
+        },
+        {
+          path: '/dashboard/puntajes',
+          name: 'DashboardPuntajes',
+          component: () => import('@/views/Dashboard/DashboardPuntajesView.vue')
         },
       ]
     }

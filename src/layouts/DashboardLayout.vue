@@ -78,6 +78,18 @@
             <span class="ml-3 flex-1 whitespace-nowrap">Pruebas</span>
           </a>
         </li> 
+
+        <li>
+
+          <a
+            href="/dashboard/puntajes"
+            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+          >
+            <font-awesome-icon :icon="['fas', 'trophy']" />
+            <span class="ml-3 flex-1 whitespace-nowrap">Puntaje</span>
+          </a>
+        </li> 
+
       </ul>
 
       <button
