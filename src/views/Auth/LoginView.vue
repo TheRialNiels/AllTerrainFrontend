@@ -50,8 +50,19 @@
           Iniciar sesión
         </button>
       </div>
-    </div>
+
+      <div class="mt-10 w-full">
+        <button
+          type="submit"
+          class="w-full rounded-lg bg-white py-2.5 text-sm font-bold text-black transition-all duration-300 ease-in-out hover:bg-black/90 hover:text-white"
+          @click.prevent="registro"
+        >
+          Registrate
+        </button>
+      </div>
+
   </div>
+</div>
 </template>
 
 <script setup lang="ts">
@@ -66,6 +77,7 @@ import {
 
 const store = useAuth();
 const router = useRouter();
+
 const form = reactive({
   email: "",
   password: "",
@@ -86,5 +98,10 @@ const login = async () => {
       router.push("/dashboard/usuarios");
     }
   } catch (error) {}
+};
+
+
+const registro =async () =>{
+  router.push("/register");
 };
 </script>

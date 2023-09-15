@@ -10,6 +10,11 @@ const router = createRouter({
       component: () => import('@/views/Auth/LoginView.vue')
     },
     {
+      path: '/register',
+      name: 'Register',
+      component: () => import('@/views/Auth/RegistrateView.vue')
+    },
+    {
       path: '/dashboard',
       name: 'Dashboard',
       component: () => import('@/layouts/DashboardLayout.vue'),
@@ -50,7 +55,7 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  const publicPages = ["Login"];
+  const publicPages = ["Login","Register"];
   //@ts-ignore
   const authRequired = !publicPages.includes(to.name);
   const loggedIn = await useAuth().currentUser();
