@@ -1,20 +1,15 @@
 <template>
   <div class="mt-5">
     <div class="mb-3">
-      <label for="nombreEquipo" class="mb-2 block font-bold">
-        Nombre de Equipo
-      </label>
+      <label for="telefono" class="mb-2 block font-bold"> Telefono </label>
       <input
-        v-model="props.form.nombreEquipo"
-        type="text"
-        id="nombreEquipo"
+        v-model="props.form.telefono"
+        type="phone"
+        id="telefono"
         class="block w-full rounded-lg border border-black bg-transparent p-2 text-sm placeholder:text-black/50 focus:border-black focus:ring-black"
-        placeholder="Nombre Equipo"
+        placeholder="telefono"
         required
       />
-    </div>
-
-    <div>
     </div>
   </div>
 </template>

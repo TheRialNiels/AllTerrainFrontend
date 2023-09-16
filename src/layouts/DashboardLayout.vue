@@ -43,11 +43,12 @@
             class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
           >
             <font-awesome-icon :icon="['fas', 'people-group']" />
-            <span class="ml-3 flex-1 whitespace-nowrap">Equipos</span>
+            <span class="ml-3 flex-1 whitespace-nowrap">
+              {{ role === "encargado" ? "Mi equipo" : "Equipos" }}
+            </span>
           </a>
         </li>
         <li>
-
           <a
             href="/dashboard/universidades"
             class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
@@ -58,7 +59,6 @@
         </li>
 
         <li>
-
           <a
             href="/dashboard/asesores"
             class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
@@ -66,10 +66,9 @@
             <font-awesome-icon :icon="['fas', 'person-harassing']" />
             <span class="ml-3 flex-1 whitespace-nowrap">Asesores</span>
           </a>
-        </li> 
+        </li>
 
         <li>
-
           <a
             href="/dashboard/pruebas"
             class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
@@ -77,10 +76,9 @@
             <font-awesome-icon :icon="['fas', 'list-check']" />
             <span class="ml-3 flex-1 whitespace-nowrap">Pruebas</span>
           </a>
-        </li> 
+        </li>
 
         <li>
-
           <a
             href="/dashboard/puntajes"
             class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
@@ -88,8 +86,17 @@
             <font-awesome-icon :icon="['fas', 'trophy']" />
             <span class="ml-3 flex-1 whitespace-nowrap">Puntaje</span>
           </a>
-        </li> 
+        </li>
 
+        <li>
+          <a
+            href="/dashboard/encargado"
+            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
+          >
+            <font-awesome-icon :icon="['fas', 'user-tie']" />
+            <span class="ml-3 flex-1 whitespace-nowrap">Mi perfil</span>
+          </a>
+        </li>
       </ul>
 
       <button
@@ -387,4 +394,6 @@
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+const role = localStorage.getItem("role");
+</script>

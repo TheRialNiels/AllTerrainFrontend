@@ -1,6 +1,6 @@
 <template>
     <div>
-      <h1 class="text-xl font-bold">Formulario para registro de equipos</h1>
+      <h1 class="text-xl font-bold">Puntajes</h1>
   
       <PuntajesTable
         :puntajeData="puntajeData"

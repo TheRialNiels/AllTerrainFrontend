@@ -14,6 +14,7 @@
       :teamData="teamData"
       :isEditing="isEditing"
       :getTeamData="getTeamData"
+      :getTeamUserData="getTeamUserData"
       @change-is-editing="changeIsEditing"
     />
   </div>
@@ -35,7 +36,7 @@ import AddTeamForm from "@/components/Forms/AddTeamForm.vue";
 import TeamTable from "@/components/Tables/TeamTable.vue";
 
 const teamData = ref([]);
-
+const encargadoData = ref([]);
 const form = reactive({
   id: "",
   nombreEquipo: "",
@@ -133,4 +134,21 @@ const updateTeam = async () => {
 const changeIsEditing = () => {
   isEditing.value = true;
 };
+
+const getTeamUserData = async () => {
+  SwalLoading();
+
+  try {
+    const response = await toDoRequest.get("api/encargado-by-user/");
+
+    if (response.status === 200) {
+      SwalClose();
+      encargadoData.value = response.data;
+      console.log(encargadoData.value);
+    }
+  } catch (error) {
+    SwalError(error.response.data.error || "¡Algo salió mal!");
+  }
+};
+
 </script>

@@ -49,6 +49,11 @@ const router = createRouter({
           name: 'DashboardPuntajes',
           component: () => import('@/views/Dashboard/DashboardPuntajesView.vue')
         },
+        {
+          path: '/dashboard/encargado',
+          name: 'DashboardEncargado',
+          component: () => import('@/views/Dashboard/DashboardEncargadoView.vue')
+        },
       ]
     }
   ]
@@ -56,14 +61,42 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const publicPages = ["Login","Register"];
+  const adminPages=["DashboardUsers","DashboardEquipos","DashboardUniversidades","DashboardAsesores","DashboardPruebas","DashboardPuntajes"]
+  const encargadoPages=["DashboardEncargado","DashboardPuntajes"]
+  const juezPages=["DashboardPruebas"]
   //@ts-ignore
   const authRequired = !publicPages.includes(to.name);
-  const loggedIn = await useAuth().currentUser();
+  const adminRequired = adminPages.includes(to.name)
+  const encargadoRequired = encargadoPages.includes(to.name)
+  const juezRequired = juezPages.includes(to.name)
+  const loggedIn = await useAuth().currentUser()
+  const role = await useAuth().getRole
 
   if (authRequired && !loggedIn) {
-    return next("/login");
+    return next('/login')
+  } else {
+    if (loggedIn) {
+      if (adminRequired) {
+        if (role === 'admin') {
+          return next()
+        } else if (role === 'encargado' || role === 'juez') {
+          return next('/dashboard')
+        }
+      }
+
+      if (encargadoRequired) {
+        if (role === 'encargado') {
+          return next()
+        } else if (role === 'admin') {
+          return next('/dashboard/usuarios')
+        } else if (role === 'juez' && !juezRequired) {
+          return next('/user/pruebas')
+        }
+      }
+    }
+
+    next()
   }
-  next();
 });
 
 export default router

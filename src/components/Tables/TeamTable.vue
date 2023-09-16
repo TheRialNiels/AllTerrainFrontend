@@ -31,10 +31,15 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+  getTeamUserData: {
+    type: Function,
+    required: true,
+  },
 });
 
 const tabulator = ref(null);
 const table = ref(null);
+const role = localStorage.getItem("role");
 
 const initTable = () => {
   tabulator.value = new Tabulator(table.value, {
@@ -144,7 +149,11 @@ watch(
 );
 
 onMounted(async () => {
-  await props.getTeamData();
+  
+  (role !== "encargado") ? await props.getTeamData() :await props.getTeamUserData();
+  
   initTable();
 });
+
+
 </script>

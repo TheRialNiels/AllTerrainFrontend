@@ -99,8 +99,6 @@
         >
           Registrar
         </button>
-  
-        
       </div>
     </div>
   </template>
