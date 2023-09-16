@@ -8,6 +8,7 @@
         id="telefono"
         class="block w-full rounded-lg border border-black bg-transparent p-2 text-sm placeholder:text-black/50 focus:border-black focus:ring-black"
         placeholder="telefono"
+        maxlength="10"
         required
       />
     </div>
