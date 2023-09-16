@@ -93,6 +93,7 @@ const emit = defineEmits(["get-subtotal", "get-time"]);
 
 const props = defineProps({
   closeModal: Function,
+  form: Object,
 });
 
 const content = reactive({
@@ -136,10 +137,15 @@ let subtotal = computed(() => {
 });
 
 const returnSubtotal = () => {
-  emit("get-subtotal", 4, subtotal.value);
+  props.form.aceleracionFrenado = subtotal;
+
+  emit("get-subtotal", 4, subtotal);
 };
 
 const returnTime = () => {
+  props.form.aceleracionPrimeraVez = content.rubrica.tiempo[0].tiempo;
+  props.form.aceleracionSegundaVez = content.rubrica.tiempo[1].tiempo;
+
   emit("get-time", 4, content.rubrica.tiempo);
 };
 

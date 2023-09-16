@@ -88,6 +88,7 @@ const emit = defineEmits(["get-subtotal"]);
 
 const props = defineProps({
   closeModal: Function,
+  form: Object,
 });
 
 const extraQuestion = ref(0);
@@ -191,6 +192,7 @@ const content = reactive({
 });
 
 const returnSubtotal = () => {
-  emit("get-subtotal", 1, subtotal.value);
+  props.form.rubricaPresentaciones = subtotal;
+  emit("get-subtotal", 1, subtotal);
 };
 </script>

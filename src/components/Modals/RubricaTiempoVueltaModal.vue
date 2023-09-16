@@ -69,6 +69,7 @@ const emit = defineEmits(["get-time"]);
 
 const props = defineProps({
   closeModal: Function,
+  form: Object,
 });
 
 const content = reactive({
@@ -87,6 +88,9 @@ const content = reactive({
 });
 
 const returnTime = () => {
+  props.form.circuitoPrimeraVez = content.rubrica[0].tiempo;
+  props.form.circuitoSegundaVez = content.rubrica[1].tiempo;
+
   emit("get-time", 3, content.rubrica);
 };
 </script>
