@@ -28,82 +28,26 @@
       class="flex h-full flex-col justify-between overflow-y-auto bg-gray-50 px-3 py-4"
     >
       <ul class="space-y-2 font-medium">
-        <li>
+        <li v-for="link in links">
           <a
-            href="/dashboard/usuarios"
+            v-if="link.roles.includes(role)"
+            :href="link.href"
             class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
           >
-            <font-awesome-icon :icon="['fas', 'users']" />
-            <span class="ml-3">Users</span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="/dashboard/equipos"
-            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
-          >
-            <font-awesome-icon :icon="['fas', 'people-group']" />
+            <font-awesome-icon :icon="['fas', link.icon]" />
             <span class="ml-3 flex-1 whitespace-nowrap">
-              {{ role === "encargado" ? "Mi equipo" : "Equipos" }}
+              {{ link.label }}
             </span>
-          </a>
-        </li>
-        <li>
-          <a
-            href="/dashboard/universidades"
-            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
-          >
-            <font-awesome-icon :icon="['fas', 'building-columns']" />
-            <span class="ml-3 flex-1 whitespace-nowrap">Universidades</span>
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="/dashboard/asesores"
-            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
-          >
-            <font-awesome-icon :icon="['fas', 'person-harassing']" />
-            <span class="ml-3 flex-1 whitespace-nowrap">Asesores</span>
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="/dashboard/pruebas"
-            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
-          >
-            <font-awesome-icon :icon="['fas', 'list-check']" />
-            <span class="ml-3 flex-1 whitespace-nowrap">Pruebas</span>
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="/dashboard/puntajes"
-            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
-          >
-            <font-awesome-icon :icon="['fas', 'trophy']" />
-            <span class="ml-3 flex-1 whitespace-nowrap">Puntaje</span>
-          </a>
-        </li>
-
-        <li>
-          <a
-            href="/dashboard/encargado"
-            class="group flex items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100"
-          >
-            <font-awesome-icon :icon="['fas', 'user-tie']" />
-            <span class="ml-3 flex-1 whitespace-nowrap">Mi perfil</span>
           </a>
         </li>
       </ul>
 
       <button
         class="group flex items-center rounded-lg p-2 text-start text-gray-900 hover:bg-gray-100"
+        @click.prevent="logOut"
       >
         <font-awesome-icon :icon="['fas', 'right-from-bracket']" />
-        <span class="ml-3 flex-1 whitespace-nowrap">Sign Out</span>
+        <span class="ml-3 flex-1 whitespace-nowrap">Cerrar sesión</span>
       </button>
     </div>
   </aside>
@@ -394,6 +338,80 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import {
+  SwalError,
+  SwalClose,
+  SwalCustomConfirm,
+  SwalCustomLoading,
+} from "@/components/SwalAlerts/index";
+import { useAuth } from "@/stores/auth";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const role = localStorage.getItem("role");
+const links = [
+  {
+    href: "/dashboard/usuarios",
+    icon: "users",
+    label: "Usuarios",
+    roles: ['admin'],
+  },
+  {
+    href: "/dashboard/equipos",
+    icon: "people-group",
+    label: "Equipos",
+    roles: ["admin"],
+  },
+  {
+    href: "/dashboard/universidades",
+    icon: "building-columns",
+    label: "Universidades",
+    roles: ["admin"],
+  },
+  {
+    href: "/dashboard/asesores",
+    icon: "person-harassing",
+    label: "Asesores",
+    roles: ["admin"],
+  },
+  {
+    href: "/dashboard/pruebas",
+    icon: "list-check",
+    label: "Pruebas",
+    roles: ["admin", "juez"],
+  },
+  {
+    href: "/dashboard/puntajes",
+    icon: "trophy",
+    label: "Puntajes",
+    roles: ["admin", "encargado"],
+  },
+  {
+    href: "/dashboard/encargado",
+    icon: "user-tie",
+    label: "Mi perfil",
+    roles: ["encargado"],
+  }
+]
+
+const logOut = async () => {
+  let opc = await SwalCustomConfirm(
+    "¿Estás seguro de cerrar sesión?",
+    "",
+    "",
+    "Cerrar sesión",
+  );
+
+  if (opc) {
+    SwalCustomLoading("Cerrando sesión...");
+    let result = await useAuth().logout();
+    if (result) {
+      SwalClose();
+      router.push("/login");
+    } else {
+      SwalError("Hubo un error al cerrar sesión");
+    }
+  }
+};
 </script>
