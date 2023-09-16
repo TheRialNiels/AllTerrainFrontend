@@ -5,7 +5,7 @@
     >
       <h1 class="text-xl text-white font-bold">Iniciar sesión</h1>
 
-      <div class="mt-5">
+      <div class="mt-5 w-full">
         <div class="mb-3">
           <label for="email" class="mb-2 block font-bold text-white">
             Correo electrónico
@@ -35,13 +35,13 @@
         </div>
       </div>
 
-      <div class="mt-4 flex w-full justify-end">
+      <!-- <div class="mt-4 flex w-full justify-end">
         <p class="cursor-pointer text-sm text-white hover:text-black/50">
           Olvidaste tu contraseña?
         </p>
-      </div>
+      </div> -->
 
-      <div class="mt-10 w-full">
+      <div class="mt-5 w-full">
         <button
           type="submit"
           class="w-full rounded-lg bg-white py-2.5 text-sm font-bold text-black transition-all duration-300 ease-in-out hover:bg-black/90 hover:text-white"
@@ -51,16 +51,12 @@
         </button>
       </div>
 
-      <div class="mt-10 w-full">
-        <button
-          type="submit"
-          class="w-full rounded-lg bg-white py-2.5 text-sm font-bold text-black transition-all duration-300 ease-in-out hover:bg-black/90 hover:text-white"
-          @click.prevent="registro"
-        >
-          Registrate
-        </button>
+      <div class="mt-5 w-full">
+        <p class="cursor-pointer text-sm text-white">
+          ¿No tienes una cuenta?
+          <a href="/register" class="hover:text-black/50">Registrate aquí</a>
+        </p>
       </div>
-
   </div>
 </div>
 </template>
@@ -98,10 +94,5 @@ const login = async () => {
       router.push("/dashboard/usuarios");
     }
   } catch (error) {}
-};
-
-
-const registro =async () =>{
-  router.push("/register");
 };
 </script>
