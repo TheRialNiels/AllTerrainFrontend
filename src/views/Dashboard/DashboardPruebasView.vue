@@ -8,6 +8,7 @@
         v-model="form.idEquipo"
         id="idEquipo"
         class="block w-full rounded-lg border border-black bg-transparent p-2 text-sm placeholder:text-black/50 focus:border-black focus:ring-black"
+        @change="getPuntajeEquipoData"
         required
       >
         <option value="0" disabled selected>Seleccione un Equipo</option>
@@ -21,7 +22,7 @@
       </select>
     </div>
 
-    <div class="my-5">
+    <div v-if="form.idEquipo > 0" class="my-5">
       <h2 class="mb-2 text-lg font-bold">Pruebas</h2>
 
       <ul class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -46,21 +47,27 @@
                 </button>
 
                 <p
-                  v-else-if="prueba.calificado && prueba.tiempos && prueba.puntaje"
+                  v-else-if="
+                    prueba.calificado && prueba.puntaje
+                  "
                   class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
                 >
                   Calificado ({{ prueba.puntaje }} pts)
                 </p>
 
                 <p
-                  v-else-if="prueba.calificado && !prueba.tiempos"
+                  v-else-if="
+                    prueba.calificado && prueba.tiempos && prueba.tiempos[0].tiempo && prueba.tiempos[1].tiempo
+                  "
                   class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
                 >
-                  Calificado ({{ prueba.puntaje }} pts)
+                  Calificado
                 </p>
 
                 <p
-                  v-else-if="prueba.calificado && prueba.tiempos"
+                  v-else-if="
+                    prueba.calificado
+                  "
                   class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
                 >
                   Calificado
@@ -73,10 +80,31 @@
     </div>
   </div>
 
-  <RubricaPresentacionesModal v-if="modalSelected === 1" @get-subtotal="getSubtotal" :closeModal="closeModal" />
-  <RubricaSeguridadModal v-if="modalSelected === 2" @get-subtotal="getSubtotal" :closeModal="closeModal" />
-  <RubricaTiempoVueltaModal v-if="modalSelected === 3" @get-time="getTime" :closeModal="closeModal" />
-  <RubricaAceleracionFrenadoModal v-if="modalSelected === 4" @get-subtotal="getSubtotal" @get-time="getTime" :closeModal="closeModal" />
+  <RubricaPresentacionesModal
+    v-if="modalSelected === 1"
+    :form="form"
+    @get-subtotal="getSubtotal"
+    :closeModal="closeModal"
+  />
+  <RubricaSeguridadModal
+    v-if="modalSelected === 2"
+    :form="form"
+    @change-status="changeStatus"
+    :closeModal="closeModal"
+  />
+  <RubricaTiempoVueltaModal
+    v-if="modalSelected === 3"
+    :form="form"
+    @get-time="getTime"
+    :closeModal="closeModal"
+  />
+  <RubricaAceleracionFrenadoModal
+    v-if="modalSelected === 4"
+    :form="form"
+    @get-subtotal="getSubtotal"
+    @get-time="getTime"
+    :closeModal="closeModal"
+  />
 </template>
 
 <script setup lang="ts">
@@ -96,12 +124,6 @@ import RubricaSeguridadModal from "@/components/Modals/RubricaSeguridadModal.vue
 import RubricaTiempoVueltaModal from "@/components/Modals/RubricaTiempoVueltaModal.vue";
 import RubricaAceleracionFrenadoModal from "@/components/Modals/RubricaAceleracionFrenadoModal.vue";
 
-interface RubricaTiempo {
-  id: number;
-  nombrePrueba: string;
-  tiempos: any;
-}
-
 interface RubricaTiempoVuelta {
   id: number;
   nombre: string;
@@ -110,6 +132,17 @@ interface RubricaTiempoVuelta {
 
 const form = reactive({
   idEquipo: 0,
+  rubricaPresentaciones: 0,
+  escrutinioSeguridad: false,
+  reporteDiseno: 0,
+  aceleracionFrenado: 0,
+  rubricaManiobrabilidad: 0,
+  hillTraction: 0,
+  rubricaResistencia: 0,
+  circuitoPrimeraVez: 0,
+  circuitoSegundaVez: 0,
+  aceleracionPrimeraVez: 0,
+  aceleracionSegundaVez: 0,
 });
 
 const modalSelected = ref(0);
@@ -159,13 +192,33 @@ const pruebaData = ref([
     ],
     calificado: false,
   },
-  {
-    id: 5,
-    nombrePrueba: "Prueba de aceleración y frenado",
-    puntaje: 0,
-    calificado: false,
-  },
+  // {
+  //   id: 5,
+  //   nombrePrueba: "Prueba de aceleración y frenado",
+  //   puntaje: 0,
+  //   calificado: false,
+  // },
 ]);
+
+const emptyPruebaData = () => {
+  pruebaData.value.forEach((prueba) => {
+    if (prueba.id === 1) {
+      prueba.puntaje = 0;
+      prueba.calificado = false;
+    } else if (prueba.id === 2) {
+      prueba.calificado = false;
+    } else if (prueba.id === 3) {
+      prueba.tiempos[0].tiempo = 0;
+      prueba.tiempos[1].tiempo = 0;
+      prueba.calificado = false;
+    } else if (prueba.id === 4) {
+      prueba.puntaje = 0;
+      prueba.tiempos[0].tiempo = 0;
+      prueba.tiempos[1].tiempo = 0;
+      prueba.calificado = false;
+    }
+  });
+};
 
 const getEquipoData = async () => {
   try {
@@ -173,7 +226,37 @@ const getEquipoData = async () => {
 
     if (response.status === 200) {
       equipoData.value = response.data;
-      console.log(equipoData.value);
+    }
+  } catch (error) {
+    SwalError(error.response.data.error || "¡Algo salió mal!");
+  }
+};
+
+const getPuntajeEquipoData = async () => {
+  emptyPruebaData();
+  try {
+    const response = await toDoRequest.get(
+      `api/obtener-prueba/?idEquipo=${form.idEquipo}`
+    );
+
+    if (response.status === 200) {
+      pruebaData.value.forEach((prueba) => {
+        if (prueba.id === 1) {
+          prueba.puntaje = response.data[0].rubricaPresentaciones;
+          prueba.calificado = (response.data[0].rubricaPresentaciones) ? true : false;
+        } else if (prueba.id === 2) {
+          prueba.calificado = response.data[0].escrutinioSeguridad;
+        } else if (prueba.id === 3) {
+          prueba.tiempos[0].tiempo = response.data[0].circuitoPrimeraVez;
+          prueba.tiempos[1].tiempo = response.data[0].circuitoSegundaVez;
+          prueba.calificado = (response.data[0].circuitoPrimeraVez && response.data[0].circuitoSegundaVez) ? true : false;
+        } else if (prueba.id === 4) {
+          prueba.puntaje = response.data[0].aceleracionFrenado;
+          prueba.tiempos[0].tiempo = response.data[0].aceleracionPrimeraVez;
+          prueba.tiempos[1].tiempo = response.data[0].aceleracionSegundaVez;
+          prueba.calificado = (response.data[0].aceleracionFrenado && response.data[0].aceleracionPrimeraVez && response.data[0].aceleracionSegundaVez) ? true : false;
+        }
+      });
     }
   } catch (error) {
     SwalError(error.response.data.error || "¡Algo salió mal!");
@@ -184,25 +267,61 @@ const closeModal = () => {
   modalSelected.value = 0;
 };
 
-const getSubtotal = (modal: number, subtotal: number) => {
-  pruebaData.value.forEach((prueba) => {
-    if (prueba.id === modal) {
-      prueba.puntaje = subtotal;
-      prueba.calificado = true;
+const getSubtotal = async (modal: number, subtotal: number) => {
+  SwalCustomLoading("Guardando...");
+  try {
+    const response = await toDoRequest.post("api/actualizar-puntaje/", form);
+
+    if (response.status === 201) {
+      pruebaData.value.forEach((prueba) => {
+        if (prueba.id === modal) {
+          prueba.puntaje = subtotal;
+          prueba.calificado = true;
+        }
+      });
+      closeModal();
     }
-  });
-  closeModal();
+  } catch (error) {
+    SwalError(error.response.data.error || "¡Algo salió mal!");
+  }
 };
 
-const getTime = (modal: number, content: Array<RubricaTiempoVuelta>) => {
-  pruebaData.value.forEach((prueba) => {
-    if (prueba.id === modal) {
-      prueba.tiempos[0] = content[0].tiempo;
-      prueba.tiempos[1] = content[1].tiempo;
-      prueba.calificado = true;
+const changeStatus = async (modal: number, status: boolean) => {
+  SwalCustomLoading("Guardando...");
+  try {
+    const response = await toDoRequest.post("api/actualizar-puntaje/", form);
+
+    if (response.status === 201) {
+      pruebaData.value.forEach((prueba) => {
+        if (prueba.id === modal) {
+          prueba.calificado = status;
+        }
+      });
+      closeModal();
     }
-  });
-  closeModal();
+  } catch (error) {
+    SwalError(error.response.data.error || "¡Algo salió mal!");
+  }
+};
+
+const getTime = async (modal: number, content: Array<RubricaTiempoVuelta>) => {
+  SwalCustomLoading("Guardando...");
+  try {
+    const response = await toDoRequest.post("api/actualizar-puntaje/", form);
+
+    if (response.status === 201) {
+      pruebaData.value.forEach((prueba) => {
+        if (prueba.id === modal) {
+          prueba.tiempos[0] = content[0].tiempo;
+          prueba.tiempos[1] = content[1].tiempo;
+          prueba.calificado = true;
+        }
+      });
+      closeModal();
+    }
+  } catch (error) {
+    SwalError(error.response.data.error || "¡Algo salió mal!");
+  }
 };
 
 onMounted(() => {

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold">Formulario para registro de Equipos</h1>
+    <h1 class="text-xl font-bold">Tabla de equipos</h1>
 
-    <AddTeamForm
+    <!-- <AddTeamForm
       :form="form"
       :isEditing="isEditing"
       @save-team="saveTeam"
       @update-team="updateTeam"
-    />
+    /> -->
 
     <TeamTable
       :form="form"

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold">Formulario para registro de usuarios</h1>
+    <h1 class="text-xl font-bold">Tabla de usuarios</h1>
 
-    <AddUserForm
+    <!-- <AddUserForm
       :form="form"
       :isEditing="isEditing"
       @save-user="saveUser"
       @update-user="updateUser"
-    />
+    /> -->
 
     <UserTable
       :form="form"

@@ -1,9 +1,10 @@
 <template>
   <div>
-    <div v-if="encargadoData" >
+    <div v-if="encargadoData.length > 0">
       <h2 class="mb-3 text-xl font-bold text-center">Ya cuentas con un equipo registrado</h2>
     </div>
-    <div v-if="!nextStep && !encargadoData">
+
+    <div v-if="!nextStep && encargadoData.length === 0">
       <h3 class="mb-3 text-xl font-bold">Equipo</h3>
       <AddTeamForm  :form="form.equipo" />
 
@@ -18,7 +19,7 @@
       </div>
     </div>
 
-    <div v-if="nextStep && !encargadoData">
+    <div v-if="nextStep && encargadoData.length === 0">
       <h3 class="mb-3 text-xl font-bold">Universidad</h3>
       <AddUniversityForm  :form="form.universidad" />
       <h3 class="mb-3 text-xl font-bold">Encargado</h3>
@@ -62,24 +63,24 @@ const encargadoData = ref([]);
 
 const form = reactive({
   encargado: {
-    
+
     telefono: "",
     idEquipo:0,
   },
   universidad: {
-   
+
     nombre: "",
     direccion: "",
     idEquipo:0,
   },
   equipo: {
-    
+
     nombreEquipo: "",
     status: true,
     idEquipo:0,
   },
   asesor: {
-    
+
     nombreCompleto: "",
     tipoAsesor: "",
     idEquipo:0,

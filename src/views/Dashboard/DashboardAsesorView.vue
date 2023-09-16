@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold">Formulario para registro de Universidad</h1>
+    <h1 class="text-xl font-bold">Tabla de asesores</h1>
 
-    <AddAdviserForm
+    <!-- <AddAdviserForm
       :form="form"
       :isEditing="isEditing"
       @save-adv="saveAdv"
       @update-adv="updateAdv"
-    />
+    /> -->
 
     <AsesorTable
       :form="form"
