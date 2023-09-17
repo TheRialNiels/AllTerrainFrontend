@@ -63,7 +63,6 @@
         <option value="" disabled selected>Seleccione un rol</option>
         <option value="admin">Administrador</option>
         <option value="juez">Juez</option>
-        <option value="encargado">Encargado</option>
       </select>
     </div>
 

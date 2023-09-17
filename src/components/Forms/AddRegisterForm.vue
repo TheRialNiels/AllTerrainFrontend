@@ -52,20 +52,6 @@
         />
       </div>
 
-      <div class="mb-3">
-        <label for="role" class="mb-2 block font-bold text-white"> Rol </label>
-        <select
-          v-model="props.form.role"
-          id="role"
-          class="block w-full rounded-lg border text-white border-white bg-transparent p-2 text-sm placeholder:text-white/50 focus:border-white focus:ring-white"
-          required
-        >
-          <option value="" disabled selected>Seleccione un rol</option>
-          <option value="encargado">Encargado</option>
-          <option value="juez">Juez</option>
-        </select>
-      </div>
-
       <div class="mb-3" >
         <label for="password" class="mb-2 block font-bold text-white">
           Contraseña
