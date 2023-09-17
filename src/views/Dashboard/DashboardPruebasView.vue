@@ -47,27 +47,7 @@
                 </button>
 
                 <p
-                  v-else-if="
-                    prueba.calificado && prueba.puntaje
-                  "
-                  class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
-                >
-                  Calificado ({{ prueba.puntaje }} pts)
-                </p>
-
-                <p
-                  v-else-if="
-                    prueba.calificado && prueba.tiempos && prueba.tiempos[0].tiempo && prueba.tiempos[1].tiempo
-                  "
-                  class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
-                >
-                  Calificado
-                </p>
-
-                <p
-                  v-else-if="
-                    prueba.calificado
-                  "
+                  v-else-if="prueba.calificado"
                   class="rounded-lg bg-black px-2 text-sm font-bold text-white hover:bg-black/80"
                 >
                   Calificado
@@ -111,12 +91,7 @@
 import { ref, reactive, onMounted } from "vue";
 import {
   SwalError,
-  SwalLoading,
   SwalCustomLoading,
-  SwalDelete,
-  SwalClose,
-  SwalSuccess,
-  SwalWarning,
 } from "@/components/SwalAlerts/index";
 import toDoRequest from "@/api/toDoRequests";
 import RubricaPresentacionesModal from "@/components/Modals/RubricaPresentacionesModal.vue";
@@ -143,6 +118,14 @@ const form = reactive({
   circuitoSegundaVez: 0,
   aceleracionPrimeraVez: 0,
   aceleracionSegundaVez: 0,
+  reporteDisenoCalificado: false,
+  rubricaPresentacionesCalificado: false,
+  aceleracionFrenadoCalificado: false,
+  rubricaManiobrabilidadCalificado: false,
+  hillTractionCalificado: false,
+  rubricaResistenciaCalificado: false,
+  circuitoCalificado: false,
+  aceleracionCalificado: false,
 });
 
 const modalSelected = ref(0);
@@ -192,32 +175,54 @@ const pruebaData = ref([
     ],
     calificado: false,
   },
-  // {
-  //   id: 5,
-  //   nombrePrueba: "Prueba de aceleración y frenado",
-  //   puntaje: 0,
-  //   calificado: false,
-  // },
 ]);
 
 const emptyPruebaData = () => {
-  pruebaData.value.forEach((prueba) => {
-    if (prueba.id === 1) {
-      prueba.puntaje = 0;
-      prueba.calificado = false;
-    } else if (prueba.id === 2) {
-      prueba.calificado = false;
-    } else if (prueba.id === 3) {
-      prueba.tiempos[0].tiempo = 0;
-      prueba.tiempos[1].tiempo = 0;
-      prueba.calificado = false;
-    } else if (prueba.id === 4) {
-      prueba.puntaje = 0;
-      prueba.tiempos[0].tiempo = 0;
-      prueba.tiempos[1].tiempo = 0;
-      prueba.calificado = false;
-    }
-  });
+  pruebaData.value = [
+    {
+      id: 1,
+      nombrePrueba: "Rubrica de presentaciones",
+      puntaje: 0,
+      calificado: false,
+    },
+    {
+      id: 2,
+      nombrePrueba: "Escrutinio de seguridad",
+      puntaje: 0,
+      calificado: false,
+    },
+    {
+      id: 3,
+      nombrePrueba: "Tiempo de vuelta",
+      tiempos: [
+        {
+          nombre: "circuitoPrimeraVez",
+          tiempo: 0,
+        },
+        {
+          nombre: "circuitoSegundaVez",
+          tiempo: 0,
+        },
+      ],
+      calificado: false,
+    },
+    {
+      id: 4,
+      nombrePrueba: "Prueba de aceleración y frenado",
+      puntaje: 0,
+      tiempos: [
+        {
+          nombre: "aceleracionPrimeraVez",
+          tiempo: 0,
+        },
+        {
+          nombre: "aceleracionSegundaVez",
+          tiempo: 0,
+        },
+      ],
+      calificado: false,
+    },
+  ];
 };
 
 const getEquipoData = async () => {
@@ -242,19 +247,19 @@ const getPuntajeEquipoData = async () => {
     if (response.status === 200) {
       pruebaData.value.forEach((prueba) => {
         if (prueba.id === 1) {
-          prueba.puntaje = response.data[0].rubricaPresentaciones;
-          prueba.calificado = (response.data[0].rubricaPresentaciones) ? true : false;
+          prueba.puntaje = response.data[0].rubricaPresentaciones || 0;
+          prueba.calificado = response.data[0].rubricaPresentacionesCalificado;
         } else if (prueba.id === 2) {
           prueba.calificado = response.data[0].escrutinioSeguridad;
         } else if (prueba.id === 3) {
-          prueba.tiempos[0].tiempo = response.data[0].circuitoPrimeraVez;
-          prueba.tiempos[1].tiempo = response.data[0].circuitoSegundaVez;
-          prueba.calificado = (response.data[0].circuitoPrimeraVez && response.data[0].circuitoSegundaVez) ? true : false;
+          prueba.tiempos[0].tiempo = response.data[0].circuitoPrimeraVez || 0;
+          prueba.tiempos[1].tiempo = response.data[0].circuitoSegundaVez || 0;
+          prueba.calificado = response.data[0].circuitoCalificado;
         } else if (prueba.id === 4) {
-          prueba.puntaje = response.data[0].aceleracionFrenado;
-          prueba.tiempos[0].tiempo = response.data[0].aceleracionPrimeraVez;
-          prueba.tiempos[1].tiempo = response.data[0].aceleracionSegundaVez;
-          prueba.calificado = (response.data[0].aceleracionFrenado && response.data[0].aceleracionPrimeraVez && response.data[0].aceleracionSegundaVez) ? true : false;
+          prueba.puntaje = response.data[0].aceleracionFrenado || 0;
+          prueba.tiempos[0].tiempo = response.data[0].aceleracionPrimeraVez || 0;
+          prueba.tiempos[1].tiempo = response.data[0].aceleracionSegundaVez || 0;
+          prueba.calificado = response.data[0].aceleracionFrenadoCalificado;
         }
       });
     }

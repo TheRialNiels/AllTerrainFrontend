@@ -193,6 +193,8 @@ const content = reactive({
 
 const returnSubtotal = () => {
   props.form.rubricaPresentaciones = subtotal;
+  props.form.rubricaPresentacionesCalificado = true;
+
   emit("get-subtotal", 1, subtotal);
 };
 </script>

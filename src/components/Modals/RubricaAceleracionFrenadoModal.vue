@@ -138,6 +138,8 @@ let subtotal = computed(() => {
 
 const returnSubtotal = () => {
   props.form.aceleracionFrenado = subtotal;
+  props.form.aceleracionFrenadoCalificado = true;
+  props.form.aceleracionCalificado = true;
 
   emit("get-subtotal", 4, subtotal);
 };

@@ -90,6 +90,7 @@ const content = reactive({
 const returnTime = () => {
   props.form.circuitoPrimeraVez = content.rubrica[0].tiempo;
   props.form.circuitoSegundaVez = content.rubrica[1].tiempo;
+  props.form.circuitoCalificado = true;
 
   emit("get-time", 3, content.rubrica);
 };
