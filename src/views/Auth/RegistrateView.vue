@@ -28,19 +28,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { reactive } from "vue";
+import { useRouter } from "vue-router";
 import {
   SwalError,
-  SwalLoading,
   SwalCustomLoading,
-  SwalDelete,
-  SwalClose,
   SwalSuccess,
   SwalWarning,
 } from "@/components/SwalAlerts/index";
 import toDoRequest from "@/api/toDoRequests";
 import AddRegisterForm from "@/components/Forms/AddRegisterForm.vue";
-import { useRouter } from "vue-router";
 
 const router = useRouter();
 
@@ -50,7 +47,7 @@ const form = reactive({
   username: "",
   first_name: "",
   last_name: "",
-  role: "",
+  role: "encargado",
   password: "",
   repeatPassword: "",
 });
