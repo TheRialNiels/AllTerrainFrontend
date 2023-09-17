@@ -1,14 +1,15 @@
 <template>
   <div>
-    <h1 class="text-xl font-bold">Tabla de usuarios</h1>
+    <h1 class="text-xl font-bold">Formulario de usuarios</h1>
 
-    <!-- <AddUserForm
+    <AddUserForm
       :form="form"
       :isEditing="isEditing"
       @save-user="saveUser"
       @update-user="updateUser"
-    /> -->
+    />
 
+    <h1 class="text-xl font-bold mt-5">Tabla de usuarios</h1>
     <UserTable
       :form="form"
       :userData="userData"
@@ -20,12 +21,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive } from "vue";
 import {
   SwalError,
   SwalLoading,
   SwalCustomLoading,
-  SwalDelete,
   SwalClose,
   SwalSuccess,
   SwalWarning,
