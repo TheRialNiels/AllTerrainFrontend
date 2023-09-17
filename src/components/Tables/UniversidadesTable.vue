@@ -72,7 +72,7 @@ const initTable = () => {
       },
       {
         title: "Equipo",
-        field: "idEquipo",
+        field: "nombre_equipo",
         headerFilter: "input",
         headerHozAlign: "center",
       },

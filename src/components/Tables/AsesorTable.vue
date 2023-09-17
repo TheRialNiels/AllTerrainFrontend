@@ -67,12 +67,23 @@ const initTable = () => {
       {
         title: "Tipo",
         field: "tipoAsesor",
-        headerFilter: "input",
+        headerFilter: "select",
         headerHozAlign: "center",
+        headerFilterParams: {
+          values: {
+            academico: "Académico",
+            tecnico: "Técnico",
+          }
+        },
+        formatter: (cell) => {
+          let data = cell.getRow().getData();
+
+          return data.tipoAsesor === "academico" ? "Académico" : "Técnico";
+        },
       },
       {
         title: "Equipo",
-        field: "idEquipo",
+        field: "nombre_equipo",
         headerFilter: "input",
         headerHozAlign: "center",
       },
