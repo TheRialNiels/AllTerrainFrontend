@@ -1,5 +1,10 @@
 <template>
   <div class="flex h-screen items-center justify-center">
+
+    <div>
+      <img src="/img/logo.png" alt="allTerrainLogo">
+    </div>  
+
     <div
       class="flex flex-col items-center justify-center rounded-lg bg-primary px-10 py-5"
     >
