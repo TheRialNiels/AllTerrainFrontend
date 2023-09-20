@@ -27,7 +27,7 @@ const table = ref(null);
 const initTable = () => {
   tabulator.value = new Tabulator(table.value, {
     data: props.puntajeData,
-    layout: "fitColumns",
+    layout: "fitDataFill",
     printAsHtml: true,
     printStyled: true,
     reactiveData: true,
@@ -58,7 +58,7 @@ const initTable = () => {
         },
       },
       {
-        title: "Rubrica Presentación",
+        title: "Rubrica Presentación y diseño",
         field: "promedioRubricaPresentaciones",
         headerHozAlign: "center",
         formatter: (cell) => {

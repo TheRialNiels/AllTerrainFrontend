@@ -91,21 +91,24 @@
     @get-time="getTime"
     :closeModal="closeModal"
   />
-  
+  <RubricaTiempoManiobrabilidadModal
+    v-if="modalSelected === 6"
+    :form="form"
+    @get-time="getTime"
+    :closeModal="closeModal"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
-import {
-  SwalError,
-  SwalCustomLoading,
-} from "@/components/SwalAlerts/index";
+import { SwalError, SwalCustomLoading } from "@/components/SwalAlerts/index";
 import toDoRequest from "@/api/toDoRequests";
 import RubricaPresentacionesModal from "@/components/Modals/RubricaPresentacionesModal.vue";
 import RubricaSeguridadModal from "@/components/Modals/RubricaSeguridadModal.vue";
 import RubricaTiempoVueltaModal from "@/components/Modals/RubricaTiempoVueltaModal.vue";
 import RubricaAceleracionFrenadoModal from "@/components/Modals/RubricaAceleracionFrenadoModal.vue";
 import RubricaTiempoHillModal from "@/components/Modals/RubricaTiempoHillModal.vue";
+import RubricaTiempoManiobrabilidadModal from "@/components/Modals/RubricaManiobrabilidadModal.vue";
 interface RubricaTiempoVuelta {
   id: number;
   nombre: string;
@@ -119,17 +122,21 @@ const form = reactive({
   reporteDiseno: 0,
   aceleracionFrenado: 0,
   rubricaManiobrabilidad: 0,
-  hillTraction: 0,
   rubricaResistencia: 0,
   circuitoPrimeraVez: 0,
   circuitoSegundaVez: 0,
   aceleracionPrimeraVez: 0,
   aceleracionSegundaVez: 0,
+  hillTractionPrimeraVez: 0,
+  hillTractionSegundaVez: 0,
+  maniobrabilidadPrimeraVez:0,
+  maniobrabilidadSegundaVez:0,
   reporteDisenoCalificado: false,
   rubricaPresentacionesCalificado: false,
   aceleracionFrenadoCalificado: false,
   rubricaManiobrabilidadCalificado: false,
   hillTractionCalificado: false,
+  maniobrabilidadCalificado:false,
   rubricaResistenciaCalificado: false,
   circuitoCalificado: false,
   aceleracionCalificado: false,
@@ -182,6 +189,36 @@ const pruebaData = ref([
     ],
     calificado: false,
   },
+  {
+    id: 5,
+    nombrePrueba: "Prueba de hill and traction",
+    tiempos: [
+      {
+        nombre: "hillTractionPrimeraVez",
+        tiempo: 0,
+      },
+      {
+        nombre: "hillTractionSegundaVez",
+        tiempo: 0,
+      },
+    ],
+    calificado: false,
+  },
+  {
+    id: 6,
+    nombrePrueba: "Prueba de maniobrabilidad",
+    tiempos: [
+      {
+        nombre: "maniobrabilidadPrimeraVez",
+        tiempo: 0,
+      },
+      {
+        nombre: "maniobrabilidadSegundaVez",
+        tiempo: 0,
+      },
+    ],
+    calificado: false,
+  },
 ]);
 
 const emptyPruebaData = () => {
@@ -229,6 +266,36 @@ const emptyPruebaData = () => {
       ],
       calificado: false,
     },
+    {
+      id: 5,
+      nombrePrueba: "Prueba de hill and traction",
+      tiempos: [
+        {
+          nombre: "hillTractionPrimeraVez",
+          tiempo: 0,
+        },
+        {
+          nombre: "hillTractionSegundaVez",
+          tiempo: 0,
+        },
+      ],
+      calificado: false,
+    },
+    {
+    id: 6,
+    nombrePrueba: "Prueba de maniobrabilidad",
+    tiempos: [
+      {
+        nombre: "maniobrabilidadPrimeraVez",
+        tiempo: 0,
+      },
+      {
+        nombre: "maniobrabilidadSegundaVez",
+        tiempo: 0,
+      },
+    ],
+    calificado: false,
+  },
   ];
 };
 
@@ -264,9 +331,23 @@ const getPuntajeEquipoData = async () => {
           prueba.calificado = response.data[0].circuitoCalificado;
         } else if (prueba.id === 4) {
           prueba.puntaje = response.data[0].aceleracionFrenado || 0;
-          prueba.tiempos[0].tiempo = response.data[0].aceleracionPrimeraVez || 0;
-          prueba.tiempos[1].tiempo = response.data[0].aceleracionSegundaVez || 0;
+          prueba.tiempos[0].tiempo =
+            response.data[0].aceleracionPrimeraVez || 0;
+          prueba.tiempos[1].tiempo =
+            response.data[0].aceleracionSegundaVez || 0;
           prueba.calificado = response.data[0].aceleracionFrenadoCalificado;
+        } else if (prueba.id === 5) {
+          prueba.tiempos[0].tiempo =
+            response.data[0].hillTractionPrimeraVez || 0;
+          prueba.tiempos[1].tiempo =
+            response.data[0].hillTractionSegundaVez || 0;
+          prueba.calificado = response.data[0].hillTractionCalificado;
+        }else if (prueba.id === 6) {
+          prueba.tiempos[0].tiempo =
+            response.data[0].maniobrabilidadPrimeraVez || 0;
+          prueba.tiempos[1].tiempo =
+            response.data[0].maniobrabilidadSegundaVez || 0;
+          prueba.calificado = response.data[0].hillTractionCalificado;
         }
       });
     }
