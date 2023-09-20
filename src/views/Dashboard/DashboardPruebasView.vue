@@ -119,9 +119,7 @@ const form = reactive({
   idEquipo: 0,
   rubricaPresentaciones: 0,
   escrutinioSeguridad: false,
-  reporteDiseno: 0,
   aceleracionFrenado: 0,
-  rubricaManiobrabilidad: 0,
   rubricaResistencia: 0,
   circuitoPrimeraVez: 0,
   circuitoSegundaVez: 0,
@@ -136,7 +134,6 @@ const form = reactive({
   aceleracionFrenadoCalificado: false,
   rubricaManiobrabilidadCalificado: false,
   hillTractionCalificado: false,
-  maniobrabilidadCalificado:false,
   rubricaResistenciaCalificado: false,
   circuitoCalificado: false,
   aceleracionCalificado: false,
@@ -347,7 +344,7 @@ const getPuntajeEquipoData = async () => {
             response.data[0].maniobrabilidadPrimeraVez || 0;
           prueba.tiempos[1].tiempo =
             response.data[0].maniobrabilidadSegundaVez || 0;
-          prueba.calificado = response.data[0].hillTractionCalificado;
+          prueba.calificado = response.data[0].rubricaManiobrabilidadCalificado;
         }
       });
     }
