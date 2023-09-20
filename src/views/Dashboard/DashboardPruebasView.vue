@@ -97,6 +97,12 @@
     @get-time="getTime"
     :closeModal="closeModal"
   />
+  <RubricaResistenciaModal
+  v-if="modalSelected === 7"
+  :form="form"
+  @get-subtotal="getSubtotal"
+  :closeModal="closeModal"
+/>
 </template>
 
 <script setup lang="ts">
@@ -109,6 +115,9 @@ import RubricaTiempoVueltaModal from "@/components/Modals/RubricaTiempoVueltaMod
 import RubricaAceleracionFrenadoModal from "@/components/Modals/RubricaAceleracionFrenadoModal.vue";
 import RubricaTiempoHillModal from "@/components/Modals/RubricaTiempoHillModal.vue";
 import RubricaTiempoManiobrabilidadModal from "@/components/Modals/RubricaManiobrabilidadModal.vue";
+import RubricaResistenciaModal from "@/components/Modals/RubricaResistenciaModal.vue";
+
+
 interface RubricaTiempoVuelta {
   id: number;
   nombre: string;
@@ -216,6 +225,12 @@ const pruebaData = ref([
     ],
     calificado: false,
   },
+  {
+    id: 7 ,
+    nombrePrueba: "Prueba de Resistencia",
+    puntaje: 0,
+    calificado: false,
+  },
 ]);
 
 const emptyPruebaData = () => {
@@ -293,6 +308,12 @@ const emptyPruebaData = () => {
     ],
     calificado: false,
   },
+  {
+    id: 7 ,
+    nombrePrueba: "Prueba de Resistencia",
+    puntaje: 0,
+    calificado: false,
+  },
   ];
 };
 
@@ -345,6 +366,9 @@ const getPuntajeEquipoData = async () => {
           prueba.tiempos[1].tiempo =
             response.data[0].maniobrabilidadSegundaVez || 0;
           prueba.calificado = response.data[0].rubricaManiobrabilidadCalificado;
+        }else if (prueba.id === 7) {
+          prueba.puntaje = response.data[0].rubricaResistencia || 0;
+          prueba.calificado = response.data[0].rubricaResistenciaCalificado;
         }
       });
     }

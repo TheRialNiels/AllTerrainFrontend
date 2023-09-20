@@ -50,14 +50,6 @@ const initTable = () => {
         headerHozAlign: "center",
       },
       {
-        title: "Reporte Diseño",
-        field: "promedioReporteDiseno",
-        headerHozAlign: "center",
-        formatter: (cell) => {
-          return cell.getValue() || "0.0";
-        },
-      },
-      {
         title: "Rubrica Presentación y diseño",
         field: "promedioRubricaPresentaciones",
         headerHozAlign: "center",
@@ -74,8 +66,16 @@ const initTable = () => {
         },
       },
       {
+        title: "Rubrica Resistencia",
+        field: "promedioRubricaResistencia",
+        headerHozAlign: "center",
+        formatter: (cell) => {
+          return cell.getValue() || "0.0";
+        },
+      },
+      {
         title: "Rubrica Maniobrabilidad",
-        field: "promedioRubricaManiobrabilidad",
+        field: "menorTiempoManiobrabilidad",
         headerHozAlign: "center",
         formatter: (cell) => {
           return cell.getValue() || "0.0";
@@ -83,15 +83,7 @@ const initTable = () => {
       },
       {
         title: "Hill Traction",
-        field: "promedioHillTraction",
-        headerHozAlign: "center",
-        formatter: (cell) => {
-          return cell.getValue() || "0.0";
-        },
-      },
-      {
-        title: "Rubrica Resistencia",
-        field: "promedioRubricaResistencia",
+        field: "menorTiempoHillTraction",
         headerHozAlign: "center",
         formatter: (cell) => {
           return cell.getValue() || "0.0";
