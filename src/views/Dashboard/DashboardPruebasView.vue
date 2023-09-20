@@ -98,11 +98,11 @@
     :closeModal="closeModal"
   />
   <RubricaResistenciaModal
-  v-if="modalSelected === 7"
-  :form="form"
-  @get-subtotal="getSubtotal"
-  :closeModal="closeModal"
-/>
+    v-if="modalSelected === 7"
+    :form="form"
+    @get-subtotal="getSubtotal"
+    :closeModal="closeModal"
+  />
 </template>
 
 <script setup lang="ts">
@@ -116,7 +116,6 @@ import RubricaAceleracionFrenadoModal from "@/components/Modals/RubricaAceleraci
 import RubricaTiempoHillModal from "@/components/Modals/RubricaTiempoHillModal.vue";
 import RubricaTiempoManiobrabilidadModal from "@/components/Modals/RubricaManiobrabilidadModal.vue";
 import RubricaResistenciaModal from "@/components/Modals/RubricaResistenciaModal.vue";
-
 
 interface RubricaTiempoVuelta {
   id: number;
@@ -136,8 +135,8 @@ const form = reactive({
   aceleracionSegundaVez: 0,
   hillTractionPrimeraVez: 0,
   hillTractionSegundaVez: 0,
-  maniobrabilidadPrimeraVez:0,
-  maniobrabilidadSegundaVez:0,
+  maniobrabilidadPrimeraVez: 0,
+  maniobrabilidadSegundaVez: 0,
   reporteDisenoCalificado: false,
   rubricaPresentacionesCalificado: false,
   aceleracionFrenadoCalificado: false,
@@ -226,7 +225,7 @@ const pruebaData = ref([
     calificado: false,
   },
   {
-    id: 7 ,
+    id: 7,
     nombrePrueba: "Prueba de Resistencia",
     puntaje: 0,
     calificado: false,
@@ -294,26 +293,26 @@ const emptyPruebaData = () => {
       calificado: false,
     },
     {
-    id: 6,
-    nombrePrueba: "Prueba de maniobrabilidad",
-    tiempos: [
-      {
-        nombre: "maniobrabilidadPrimeraVez",
-        tiempo: 0,
-      },
-      {
-        nombre: "maniobrabilidadSegundaVez",
-        tiempo: 0,
-      },
-    ],
-    calificado: false,
-  },
-  {
-    id: 7 ,
-    nombrePrueba: "Prueba de Resistencia",
-    puntaje: 0,
-    calificado: false,
-  },
+      id: 6,
+      nombrePrueba: "Prueba de maniobrabilidad",
+      tiempos: [
+        {
+          nombre: "maniobrabilidadPrimeraVez",
+          tiempo: 0,
+        },
+        {
+          nombre: "maniobrabilidadSegundaVez",
+          tiempo: 0,
+        },
+      ],
+      calificado: false,
+    },
+    {
+      id: 7,
+      nombrePrueba: "Prueba de Resistencia",
+      puntaje: 0,
+      calificado: false,
+    },
   ];
 };
 
@@ -337,40 +336,44 @@ const getPuntajeEquipoData = async () => {
     );
 
     if (response.status === 200) {
-      pruebaData.value.forEach((prueba) => {
-        if (prueba.id === 1) {
-          prueba.puntaje = response.data[0].rubricaPresentaciones || 0;
-          prueba.calificado = response.data[0].rubricaPresentacionesCalificado;
-        } else if (prueba.id === 2) {
-          prueba.calificado = response.data[0].escrutinioSeguridad;
-        } else if (prueba.id === 3) {
-          prueba.tiempos[0].tiempo = response.data[0].circuitoPrimeraVez || 0;
-          prueba.tiempos[1].tiempo = response.data[0].circuitoSegundaVez || 0;
-          prueba.calificado = response.data[0].circuitoCalificado;
-        } else if (prueba.id === 4) {
-          prueba.puntaje = response.data[0].aceleracionFrenado || 0;
-          prueba.tiempos[0].tiempo =
-            response.data[0].aceleracionPrimeraVez || 0;
-          prueba.tiempos[1].tiempo =
-            response.data[0].aceleracionSegundaVez || 0;
-          prueba.calificado = response.data[0].aceleracionFrenadoCalificado;
-        } else if (prueba.id === 5) {
-          prueba.tiempos[0].tiempo =
-            response.data[0].hillTractionPrimeraVez || 0;
-          prueba.tiempos[1].tiempo =
-            response.data[0].hillTractionSegundaVez || 0;
-          prueba.calificado = response.data[0].hillTractionCalificado;
-        }else if (prueba.id === 6) {
-          prueba.tiempos[0].tiempo =
-            response.data[0].maniobrabilidadPrimeraVez || 0;
-          prueba.tiempos[1].tiempo =
-            response.data[0].maniobrabilidadSegundaVez || 0;
-          prueba.calificado = response.data[0].rubricaManiobrabilidadCalificado;
-        }else if (prueba.id === 7) {
-          prueba.puntaje = response.data[0].rubricaResistencia || 0;
-          prueba.calificado = response.data[0].rubricaResistenciaCalificado;
-        }
-      });
+      if (response.data[0]) {
+        pruebaData.value.forEach((prueba) => {
+          if (prueba.id === 1) {
+            prueba.puntaje = response.data[0].rubricaPresentaciones || 0;
+            prueba.calificado =
+              response.data[0].rubricaPresentacionesCalificado;
+          } else if (prueba.id === 2) {
+            prueba.calificado = response.data[0].escrutinioSeguridad;
+          } else if (prueba.id === 3) {
+            prueba.tiempos[0].tiempo = response.data[0].circuitoPrimeraVez || 0;
+            prueba.tiempos[1].tiempo = response.data[0].circuitoSegundaVez || 0;
+            prueba.calificado = response.data[0].circuitoCalificado;
+          } else if (prueba.id === 4) {
+            prueba.puntaje = response.data[0].aceleracionFrenado || 0;
+            prueba.tiempos[0].tiempo =
+              response.data[0].aceleracionPrimeraVez || 0;
+            prueba.tiempos[1].tiempo =
+              response.data[0].aceleracionSegundaVez || 0;
+            prueba.calificado = response.data[0].aceleracionFrenadoCalificado;
+          } else if (prueba.id === 5) {
+            prueba.tiempos[0].tiempo =
+              response.data[0].hillTractionPrimeraVez || 0;
+            prueba.tiempos[1].tiempo =
+              response.data[0].hillTractionSegundaVez || 0;
+            prueba.calificado = response.data[0].hillTractionCalificado;
+          } else if (prueba.id === 6) {
+            prueba.tiempos[0].tiempo =
+              response.data[0].maniobrabilidadPrimeraVez || 0;
+            prueba.tiempos[1].tiempo =
+              response.data[0].maniobrabilidadSegundaVez || 0;
+            prueba.calificado =
+              response.data[0].rubricaManiobrabilidadCalificado;
+          } else if (prueba.id === 7) {
+            prueba.puntaje = response.data[0].rubricaResistencia || 0;
+            prueba.calificado = response.data[0].rubricaResistenciaCalificado;
+          }
+        });
+      }
     }
   } catch (error) {
     SwalError(error.response.data.error || "¡Algo salió mal!");

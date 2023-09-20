@@ -66,7 +66,7 @@ const initTable = () => {
         },
       },
       {
-        title: "Rubrica Resistencia",
+        title: "Total de vueltas",
         field: "promedioRubricaResistencia",
         headerHozAlign: "center",
         formatter: (cell) => {
@@ -74,7 +74,7 @@ const initTable = () => {
         },
       },
       {
-        title: "Rubrica Maniobrabilidad",
+        title: "Menor tiempo en maniobrabilidad",
         field: "menorTiempoManiobrabilidad",
         headerHozAlign: "center",
         formatter: (cell) => {
@@ -82,7 +82,7 @@ const initTable = () => {
         },
       },
       {
-        title: "Hill Traction",
+        title: "Menor tiempo en hill traction",
         field: "menorTiempoHillTraction",
         headerHozAlign: "center",
         formatter: (cell) => {
