@@ -85,6 +85,13 @@
     @get-time="getTime"
     :closeModal="closeModal"
   />
+  <RubricaTiempoHillModal
+    v-if="modalSelected === 5"
+    :form="form"
+    @get-time="getTime"
+    :closeModal="closeModal"
+  />
+  
 </template>
 
 <script setup lang="ts">
@@ -98,7 +105,7 @@ import RubricaPresentacionesModal from "@/components/Modals/RubricaPresentacione
 import RubricaSeguridadModal from "@/components/Modals/RubricaSeguridadModal.vue";
 import RubricaTiempoVueltaModal from "@/components/Modals/RubricaTiempoVueltaModal.vue";
 import RubricaAceleracionFrenadoModal from "@/components/Modals/RubricaAceleracionFrenadoModal.vue";
-
+import RubricaTiempoHillModal from "@/components/Modals/RubricaTiempoHillModal.vue";
 interface RubricaTiempoVuelta {
   id: number;
   nombre: string;

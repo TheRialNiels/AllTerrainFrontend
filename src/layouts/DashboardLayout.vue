@@ -337,7 +337,10 @@
     </div>
 
     <div class="flex justify-between items-center mt-5">
+      <img src="/img/upsrj.jpeg" alt="Coyote Imagen" class="w-1/4 h-40">
       <img src="/img/coyote.jpeg" alt="Coyote Imagen" class="w-1/4 h-40">
+      <img src="/img/coyotes.jpeg" alt="Coyote Imagen" class="w-1/4 h-40">
+      
     </div>
   </div>
 </template>
