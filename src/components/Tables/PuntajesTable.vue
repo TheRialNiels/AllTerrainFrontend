@@ -54,7 +54,8 @@ const initTable = () => {
         field: "promedioRubricaPresentaciones",
         headerHozAlign: "center",
         formatter: (cell) => {
-          return cell.getValue() || "0.0";
+          const value = parseFloat(cell.getValue()) || 0.0;
+          return value.toFixed(2);
         },
       },
       {
@@ -109,6 +110,10 @@ const initTable = () => {
         title: "Total",
         field: "totalPuntaje",
         headerHozAlign: "center",
+        formatter: (cell) => {
+          const value = parseFloat(cell.getValue()) || 0.0;
+          return value.toFixed(2);
+        },
       },
     ],
   });

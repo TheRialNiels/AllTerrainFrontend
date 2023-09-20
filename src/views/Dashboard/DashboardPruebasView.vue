@@ -196,7 +196,7 @@ const pruebaData = ref([
   },
   {
     id: 5,
-    nombrePrueba: "Prueba de hill and traction",
+    nombrePrueba: "Hill and traction",
     tiempos: [
       {
         nombre: "hillTractionPrimeraVez",
@@ -211,7 +211,7 @@ const pruebaData = ref([
   },
   {
     id: 6,
-    nombrePrueba: "Prueba de maniobrabilidad",
+    nombrePrueba: "Maniobrabilidad",
     tiempos: [
       {
         nombre: "maniobrabilidadPrimeraVez",
@@ -226,7 +226,7 @@ const pruebaData = ref([
   },
   {
     id: 7,
-    nombrePrueba: "Prueba de Resistencia",
+    nombrePrueba: "Resistencia",
     puntaje: 0,
     calificado: false,
   },
@@ -263,7 +263,7 @@ const emptyPruebaData = () => {
     },
     {
       id: 4,
-      nombrePrueba: "Prueba de aceleración y frenado",
+      nombrePrueba: "Aceleración y frenado",
       puntaje: 0,
       tiempos: [
         {
@@ -279,7 +279,7 @@ const emptyPruebaData = () => {
     },
     {
       id: 5,
-      nombrePrueba: "Prueba de hill and traction",
+      nombrePrueba: "Hill and traction",
       tiempos: [
         {
           nombre: "hillTractionPrimeraVez",
@@ -294,7 +294,7 @@ const emptyPruebaData = () => {
     },
     {
       id: 6,
-      nombrePrueba: "Prueba de maniobrabilidad",
+      nombrePrueba: "Maniobrabilidad",
       tiempos: [
         {
           nombre: "maniobrabilidadPrimeraVez",
@@ -309,7 +309,7 @@ const emptyPruebaData = () => {
     },
     {
       id: 7,
-      nombrePrueba: "Prueba de Resistencia",
+      nombrePrueba: "Resistencia",
       puntaje: 0,
       calificado: false,
     },

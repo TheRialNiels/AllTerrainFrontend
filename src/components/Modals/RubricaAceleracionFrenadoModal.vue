@@ -15,7 +15,7 @@
             <tr>
               <th class="border border-black px-4 py-2"></th>
               <th class="border border-black px-4 py-2">Rubro</th>
-              <th class="border border-black px-4 py-2">Tiempo</th>
+              <th class="border border-black px-4 py-2">Tiempo/seg</th>
             </tr>
           </thead>
           <tbody>
