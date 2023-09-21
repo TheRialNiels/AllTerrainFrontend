@@ -10,7 +10,7 @@ axiosInstance.interceptors.request.use((config: any) => {
 
   if (
     config.url.includes("api/auth/login/") ||
-    config.url.includes("api/auth/create-encargado/") 
+    config.url.includes("api/auth/create-encargado/")
   ) {
     return config;
   }
